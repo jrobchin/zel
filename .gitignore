@@ -1,0 +1,9 @@
+# C++
+*.o
+*.so
+*.a
+*.lib
+*.out
+
+# notes
+notes/*
