@@ -13,3 +13,6 @@ notes/*
 
 # executable
 zel
+
+# tests executable
+tests/tests

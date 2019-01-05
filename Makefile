@@ -24,5 +24,5 @@ run: all
 clean:
 	rm -f $(EXE) $(OBJECTS)
 
-test:
+test: all
 	cd tests && make run && cd ..
