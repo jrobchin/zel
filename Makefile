@@ -23,3 +23,6 @@ run: all
 
 clean:
 	rm -f $(EXE) $(OBJECTS)
+
+test:
+	cd tests && make run && cd ..
