@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -g -std=c++11 -I../src
-LDFLAGS = -lSDL2 -lGLEW -lGLU -lGL
+LDFLAGS = -lSDL2 -lSDL2_image -lGLEW -lGLU -lGL
 
 PROJ_OBJECTS = $(shell find ../src -type f -name '*.o' -and ! -name 'main.o')
 

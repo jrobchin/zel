@@ -2,7 +2,7 @@ EXE = zel
 
 CXX = g++
 CXXFLAGS = -g -std=c++11
-LDFLAGS = -lSDL2 -lGLEW -lGLU -lGL
+LDFLAGS = -lSDL2 -lSDL2_image -lGLEW -lGLU -lGL
 
 # All source files
 SOURCES = $(shell find src -type f -name '*.cpp')
