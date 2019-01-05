@@ -5,8 +5,11 @@
 *.lib
 *.out
 
+# vscode
+.vscode/*
+
 # notes
 notes/*
 
 # executable
-parkcurse
+zel
