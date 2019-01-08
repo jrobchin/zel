@@ -8,8 +8,8 @@ TEST_CASE("create and destroy window") {
     
     Window window = Window();
 
-    REQUIRE(window.getWindow() != NULL);
-    REQUIRE(window.getRenderer() != NULL);
+    REQUIRE(window.window != NULL);
+    REQUIRE(window.renderer != NULL);
 
     SDL_Delay(1000); // wait to show window for a second
 }

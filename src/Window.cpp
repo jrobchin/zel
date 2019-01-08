@@ -5,8 +5,8 @@
 #include "Window.hpp"
 
 Window::Window(std::string windowName, int screenWidth, int screenHeight) {
-    _window = NULL;
-    _renderer = NULL;
+    window = NULL;
+    renderer = NULL;
     
     _init(windowName, screenWidth, screenHeight);
 }
@@ -27,24 +27,24 @@ bool Window::_init(std::string windowName, int screenWidth, int screenHeight) {
         success = false;
     } else {
         // Create window
-        _window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+        window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
                                   screenWidth, screenHeight, SDL_WINDOW_SHOWN);
-        if (_window == NULL) {
+        if (window == NULL) {
             Log::error("SDL window creation failed.");
             Log::error(SDL_GetError());
             success = false;
 
         } else {
             // Get window surface
-            _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
-            if (_renderer == NULL) {
+            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+            if (renderer == NULL) {
                 Log::error("SDL renderer creation failed.");
                 Log::error(SDL_GetError());
                 success = false;
 
             } else {
                 // Initialize renderer color
-                SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+                SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
                 // Initialize SDL images
                 int imgFlags = IMG_INIT_PNG;
@@ -66,20 +66,12 @@ void Window::_close() {
     Log::verbose("Closing SDL2 and window.");
 
     //Destroy window    
-    SDL_DestroyRenderer(_renderer);
-    SDL_DestroyWindow(_window);
-    _window = NULL;
-    _renderer = NULL;
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    window = NULL;
+    renderer = NULL;
 
     //Quit SDL subsystems
     IMG_Quit();
     SDL_Quit();
-}
-
-SDL_Window* Window::getWindow() {
-    return _window;
-}
-
-SDL_Renderer* Window::getRenderer() {
-    return _renderer;
 }
