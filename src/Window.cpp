@@ -4,6 +4,8 @@
 
 #include "Window.hpp"
 
+Window* Window::_instance = nullptr;
+
 Window::Window(std::string windowName, int screenWidth, int screenHeight) {
     window = NULL;
     renderer = NULL;
@@ -13,6 +15,16 @@ Window::Window(std::string windowName, int screenWidth, int screenHeight) {
 
 Window::~Window() {
     _close();
+}
+
+Window* Window::Instance() {
+    if (!_instance)
+        _instance = new Window();
+    return _instance;
+}
+
+void Window::getSize(int* width, int* height) {
+    SDL_GetWindowSize(this->window, width, height);
 }
 
 bool Window::_init(std::string windowName, int screenWidth, int screenHeight) {
