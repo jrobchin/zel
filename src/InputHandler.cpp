@@ -22,7 +22,7 @@ InputHandler::InputHandler():
 InputHandler::~InputHandler() {
 }
 
-InputHandler* InputHandler::getInstance() {
+InputHandler* InputHandler::Instance() {
     if (!_instance)
         _instance = new InputHandler();
     return _instance;

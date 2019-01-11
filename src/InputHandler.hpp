@@ -32,7 +32,7 @@ public:
     ~InputHandler();
 
     /// Get or create new instance of the input handler
-    static InputHandler* getInstance();
+    static InputHandler* Instance();
 
     /// Update inputs with current inputs
     void update();

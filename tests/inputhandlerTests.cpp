@@ -16,11 +16,11 @@
 #define INPUT_TEST_NLOOPS INPUT_TEST_FRAMES / INPUT_TEST_DELAY // number of loops for test for loops
 
 TEST_CASE("input tests") {
-    // Must be a window for inputs
-    Window window = Window();
+    // There must be target window for inputs
+    Window* window = Window::Instance();
     
     // Get input handler instance (this will create the instance)
-    InputHandler* inputHandler = InputHandler::getInstance();
+    InputHandler* inputHandler = InputHandler::Instance();
 
     SECTION("keyboard") {
         Log::log("= Keyboard Input Tests =");
