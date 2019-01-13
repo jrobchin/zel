@@ -17,11 +17,17 @@ public:
     SDL_Renderer* renderer;
 
     void getSize(int* width, int* height);
+
+    /// Create an SDL_Color
+    SDL_Color createColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+    SDL_Color createColor(std::string hex);
 private:
-    /// Singleton instance
-    static Window* _instance;
+    /// Singletons constructor and destructor are private
     Window(std::string windowName=WINDOW_NAME, int screenWidth=SCREEN_WIDTH, int screenHeight=SCREEN_HEIGHT);
     ~Window();
+    
+    /// Singleton instance
+    static Window* _instance;
 
     /// Initialize SDL and window
     bool _init(std::string windowName, int screenWidth, int screenHeight);

@@ -23,10 +23,6 @@ Window* Window::Instance() {
     return _instance;
 }
 
-void Window::getSize(int* width, int* height) {
-    SDL_GetWindowSize(this->window, width, height);
-}
-
 bool Window::_init(std::string windowName, int screenWidth, int screenHeight) {
     
     Log::verbose("Initializing SDL2 and window.");
@@ -86,4 +82,32 @@ void Window::_close() {
     //Quit SDL subsystems
     IMG_Quit();
     SDL_Quit();
+}
+
+void Window::getSize(int* width, int* height) {
+    SDL_GetWindowSize(this->window, width, height);
+}
+
+SDL_Color Window::createColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+    SDL_Color color = {r, g, b, a};
+    return color;
+}
+
+SDL_Color Window::createColor(std::string hex) {
+
+    if (hex.compare(0, 1, "#") == 0) {
+        hex.erase(0, 1);
+    }
+    
+    uint8_t r, g, b, a(255);
+    
+    long int longHex = (int) std::strtol(hex.c_str(), NULL, 16);
+
+    r = (longHex >> 16) & 255;
+    g = (longHex >> 8) & 255;
+    b = longHex & 255;
+
+    SDL_Color color = {r, g, b, a};
+
+    return color;
 }
