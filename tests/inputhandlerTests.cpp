@@ -15,7 +15,7 @@
 #define INPUT_TEST_FRAMES 1800  // number of input frames for each test
 #define INPUT_TEST_NLOOPS INPUT_TEST_FRAMES / INPUT_TEST_DELAY // number of loops for test for loops
 
-TEST_CASE("input tests") {
+TEST_CASE("input tests", "[!hide]") {
     // There must be target window for inputs
     Window* window = Window::Instance();
     
