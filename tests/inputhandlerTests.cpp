@@ -1,7 +1,7 @@
 #include "lib/catch.hpp"
 
 #include "Log.hpp"
-#include "Window.hpp"
+#include "Graphics.hpp"
 #include "InputHandler.hpp"
 
 /*
@@ -16,8 +16,8 @@
 #define INPUT_TEST_NLOOPS INPUT_TEST_FRAMES / INPUT_TEST_DELAY // number of loops for test for loops
 
 TEST_CASE("input tests", "[!hide]") {
-    // There must be target window for inputs
-    Window* window = Window::Instance();
+    // There must be target graphics for inputs
+    Graphics* graphics = Graphics::Instance();
     
     // Get input handler instance (this will create the instance)
     InputHandler* inputHandler = InputHandler::Instance();

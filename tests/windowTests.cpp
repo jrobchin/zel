@@ -4,22 +4,22 @@
 #include <SDL2/SDL.h>
 
 #include "Log.hpp"
-#include "Window.hpp"
+#include "Graphics.hpp"
 
 TEST_CASE("create and destroy window") {
     Log::verboseMode(true); // print verbose 
     
-    Window* window = Window::Instance();
+    Graphics* graphics = Graphics::Instance();
 
-    REQUIRE(window->window != NULL);
-    REQUIRE(window->renderer != NULL);
+    REQUIRE(graphics->window != NULL);
+    REQUIRE(graphics->renderer != NULL);
     
     int w, h;
-    window->getSize(&w, &h);
+    graphics->getWindowSize(&w, &h);
     REQUIRE(w == SCREEN_WIDTH);
     REQUIRE(h == SCREEN_HEIGHT);
 
-    SDL_Delay(1000); // wait to show window for a second
+    SDL_Delay(1000); // wait to show graphics for a second
 }
 
 bool sameColor(SDL_Color color1, SDL_Color color2) {
@@ -32,9 +32,9 @@ bool sameColor(SDL_Color color1, SDL_Color color2) {
     return true;
 }
 
-TEST_CASE("window functions") {
+TEST_CASE("graphics functions") {
     SECTION("create color") {
-        Window* window = Window::Instance();
+        Graphics* graphics = Graphics::Instance();
 
         // Green test color: rgb(78, 219, 90)
         SDL_Color testColor = { (uint8_t) 78, (uint8_t) 219, (uint8_t) 90};
@@ -42,8 +42,8 @@ TEST_CASE("window functions") {
         SDL_Color rgbColor; // color to be created by inputting RGB values
         SDL_Color hexColor; // color to be created by inputting a hex value
 
-        rgbColor = window->createColor(78, 219, 90, 127);
-        hexColor = window->createColor("#4edb5a");
+        rgbColor = graphics->createColor(78, 219, 90, 127);
+        hexColor = graphics->createColor("#4edb5a");
 
         // Check that we made the colors correctly
         REQUIRE(sameColor(testColor, rgbColor) == true);

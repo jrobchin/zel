@@ -2,28 +2,28 @@
 #include <SDL2/SDL_image.h>
 #include "Log.hpp"
 
-#include "Window.hpp"
+#include "Graphics.hpp"
 
-Window* Window::_instance = nullptr;
+Graphics* Graphics::_instance = nullptr;
 
-Window::Window(std::string windowName, int screenWidth, int screenHeight) {
+Graphics::Graphics(std::string windowName, int screenWidth, int screenHeight) {
     window = NULL;
     renderer = NULL;
     
     _init(windowName, screenWidth, screenHeight);
 }
 
-Window::~Window() {
+Graphics::~Graphics() {
     _close();
 }
 
-Window* Window::Instance() {
+Graphics* Graphics::Instance() {
     if (!_instance)
-        _instance = new Window();
+        _instance = new Graphics();
     return _instance;
 }
 
-bool Window::_init(std::string windowName, int screenWidth, int screenHeight) {
+bool Graphics::_init(std::string windowName, int screenWidth, int screenHeight) {
     
     Log::verbose("Initializing SDL2 and window.");
 
@@ -70,7 +70,7 @@ bool Window::_init(std::string windowName, int screenWidth, int screenHeight) {
     return success;
 }
 
-void Window::_close() {
+void Graphics::_close() {
     Log::verbose("Closing SDL2 and window.");
 
     //Destroy window    
@@ -84,16 +84,16 @@ void Window::_close() {
     SDL_Quit();
 }
 
-void Window::getSize(int* width, int* height) {
+void Graphics::getWindowSize(int* width, int* height) {
     SDL_GetWindowSize(this->window, width, height);
 }
 
-SDL_Color Window::createColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+SDL_Color Graphics::createColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
     SDL_Color color = {r, g, b, a};
     return color;
 }
 
-SDL_Color Window::createColor(std::string hex) {
+SDL_Color Graphics::createColor(std::string hex) {
 
     if (hex.compare(0, 1, "#") == 0) {
         hex.erase(0, 1);
