@@ -25,4 +25,4 @@ clean:
 	rm -f $(EXE) $(OBJECTS)
 
 test: all
-	cd tests && make run && cd ..
+	cd tests && ./tests $(TEST_ARGS) && cd ..

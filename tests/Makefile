@@ -12,7 +12,7 @@ EXE = tests
 all: $(EXE)
 
 run: $(EXE)
-	./tests -s
+	./tests $(TEST_ARGS)
 
 $(EXE): $(PROJ_OBJECTS) $(TEST_OBJECTS)
 	@echo Linking tests...
