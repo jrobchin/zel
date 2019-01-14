@@ -10,7 +10,7 @@ template <class T>
 struct Point {
     T x, y;
 
-    Point() : x(x), y(y) {};
+    Point() : x(0), y(0) {};
     Point(T x, T y) : x(x), y(y) {};
 
     friend bool operator== (const Point<T>& p1, const Point<T>& p2) {
