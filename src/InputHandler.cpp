@@ -46,6 +46,7 @@ ButtonState InputHandler::nextButtonState(ButtonState prevState, bool pressed) {
             return ButtonState::UP;
         }
     }
+    return ButtonState::DEFAULT;
 }
 
 void InputHandler::update() {
@@ -90,6 +91,7 @@ ButtonState InputHandler::getMouseButtonState(MouseButton mouseButton) {
             break;
         default:
             Log::error("Mouse button not recognized.");
+            return; // TODO: make this nicer or throw an exception
             break;
     }
 }
