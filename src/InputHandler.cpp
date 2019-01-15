@@ -91,7 +91,7 @@ ButtonState InputHandler::getMouseButtonState(MouseButton mouseButton) {
             break;
         default:
             Log::error("Mouse button not recognized.");
-            return; // TODO: make this nicer or throw an exception
+            throw "Mouse button not recognized."; // TODO: make this nicer
             break;
     }
 }
