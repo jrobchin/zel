@@ -44,7 +44,7 @@ bool Graphics::_init(std::string windowName, int screenWidth, int screenHeight) 
 
         } else {
             // Get window surface
-            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+            renderer = SDL_CreateRenderer(window, -1, 0);
             if (renderer == NULL) {
                 Log::error("SDL renderer creation failed.");
                 Log::error(SDL_GetError());
@@ -52,7 +52,7 @@ bool Graphics::_init(std::string windowName, int screenWidth, int screenHeight) 
 
             } else {
                 // Initialize renderer color
-                SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+                SDL_SetRenderDrawColor(renderer, bgColor.r, bgColor.g, bgColor.b, bgColor.a);
 
                 // Initialize SDL images
                 int imgFlags = IMG_INIT_PNG;
@@ -88,6 +88,22 @@ void Graphics::getWindowSize(int* width, int* height) {
     SDL_GetWindowSize(this->window, width, height);
 }
 
+void Graphics::clearRender() {
+    SDL_RenderClear(renderer);
+}
+
+void Graphics::presentRender() {
+    SDL_RenderPresent(renderer);
+}
+
+void Graphics::setDrawColor(SDL_Color color) {
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+}
+
+void Graphics::drawTexture(SDL_Texture* texture, SDL_Rect* clipRect) {
+    SDL_RenderCopy(renderer, texture, clipRect, NULL);
+}
+
 SDL_Color Graphics::createColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
     SDL_Color color = {r, g, b, a};
     return color;
@@ -110,4 +126,25 @@ SDL_Color Graphics::createColor(std::string hex) {
     SDL_Color color = {r, g, b, a};
 
     return color;
+}
+
+SDL_Texture* Graphics::createTexture(std::string fpath) {
+    SDL_Texture* newTexture = nullptr;
+
+    // Create surface from image
+    SDL_Surface* loadedSurface = IMG_Load(fpath.c_str());
+    if (loadedSurface == nullptr) {
+        // Image load failed
+        std::string error_msg = "Unable to load image at " + fpath + " error: " + IMG_GetError();
+        Log::error(error_msg);
+    } else {
+        newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+        if (newTexture == nullptr) {
+            // Texture creation failed
+            std::string error_msg = "Unable to create texture of " + fpath + ". error: " + IMG_GetError();
+            Log::error(error_msg);
+        }
+        SDL_FreeSurface(loadedSurface);
+    }
+    return newTexture;
 }

@@ -6,7 +6,11 @@
 #include "Log.hpp"
 #include "Graphics.hpp"
 
-TEST_CASE("create and destroy window") {
+TEST_CASE("window") {
+    /* 
+    * Illustrates the creation and destruction of the game window.
+    */
+
     Log::verboseMode(true); // print verbose 
     
     Graphics* graphics = Graphics::Instance();
@@ -22,6 +26,8 @@ TEST_CASE("create and destroy window") {
     SDL_Delay(1000); // wait to show graphics for a second
 }
 
+
+/// Used to check if two SDL_Color's are identical
 bool sameColor(SDL_Color color1, SDL_Color color2) {
     if (color1.r != color2.r)
         return false;
@@ -32,8 +38,14 @@ bool sameColor(SDL_Color color1, SDL_Color color2) {
     return true;
 }
 
-TEST_CASE("graphics functions") {
-    SECTION("create color") {
+TEST_CASE("graphics_functions") {
+    /* 
+     * Illustrates functionality of the Graphics class.
+     */
+
+    SECTION("create_color") {
+        /* Create colours multiple ways and make sure the result is expected. */
+
         Graphics* graphics = Graphics::Instance();
 
         // Green test color: rgb(78, 219, 90)
@@ -48,5 +60,34 @@ TEST_CASE("graphics functions") {
         // Check that we made the colors correctly
         REQUIRE(sameColor(testColor, rgbColor) == true);
         REQUIRE(sameColor(testColor, hexColor) == true);
+    }
+
+    SECTION("draw_color") {
+        /* Create a color and draw it to the window. */
+        
+        Graphics* graphics = Graphics::Instance();
+
+        SDL_Color color = graphics->createColor("#4edb5a");
+
+        graphics->setDrawColor(color);
+
+        graphics->clearRender();
+        graphics->presentRender();
+
+        SDL_Delay(500);
+    }
+
+    SECTION("create_draw_texture") {
+        /* Create a texture from a png file and draw it to the window. */
+
+        Graphics* graphics = Graphics::Instance();
+
+        SDL_Texture* texture = graphics->createTexture("../assets/images/test.png");
+
+        graphics->clearRender();
+        graphics->drawTexture(texture);
+        graphics->presentRender();
+
+        SDL_Delay(500);
     }
 }
