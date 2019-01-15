@@ -4,7 +4,7 @@ LDFLAGS = -lSDL2 -lSDL2_image -lGLEW -lGLU -lGL
 
 PROJ_OBJECTS = $(shell find ../src -type f -name '*.o' -and ! -name 'main.o')
 
-TEST_SOURCES = $(shell find -type f -name '*Tests.cpp' -exec basename {} \;)
+TEST_SOURCES = $(shell find -type f -name '*test.cpp' -exec basename {} \;)
 TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)
 
 EXE = tests
@@ -24,3 +24,6 @@ $(EXE): $(PROJ_OBJECTS) $(TEST_OBJECTS)
 
 clean:
 	rm -f *.o tests
+
+src:
+	cd .. && make && cd tests
