@@ -1,0 +1,7 @@
+PROJECT_NAME = "zel"
+
+OUTPUT_DIRECTORY = docs
+
+INPUT = src
+
+RECURSIVE = YES
