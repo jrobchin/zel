@@ -1,7 +1,7 @@
 EXE = zel
 
 CXX = g++
-CXXFLAGS = -g -std=c++11 -Isrc
+CXXFLAGS = -g -std=c++11 -Isrc -Wall
 LDFLAGS = -lSDL2 -lSDL2_image -lGLEW -lGLU -lGL
 
 # All source files
