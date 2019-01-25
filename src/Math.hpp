@@ -64,6 +64,10 @@ public:
     T height();
     /// Get SDL rect pointer
     SDL_Rect getSDL_Rect();
+    /// Check if a point is inside the rectangle
+    bool isInside(Point<T>& pt);
+    /// Check if two rectangles collided
+    bool isCollision(Rectangle<T>& other);
 
 private:
     void _init();
@@ -183,6 +187,26 @@ T Rectangle<T>::width() {
 template <class T>
 T Rectangle<T>::height() {
     return _bottom - _top;
+}
+
+template <class T>
+bool Rectangle<T>::isInside(Point<T>& pt) {
+    if (pt.y > _top && pt.y < _bottom && pt.x > _left && pt.y < _right) {
+        return true;
+    }
+    return false;
+}
+
+template <class T>
+bool Rectangle<T>::isCollision(Rectangle<T>& other) {
+    // AABB collision detection
+    if (_left < other.left() + other.width() &&
+        _left + width() > other.left() &&
+        _top < other.top() + other.height() &&
+        _top + height() > other.top()) {
+            return true;
+    }
+    return false;
 }
 
 #endif

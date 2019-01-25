@@ -73,3 +73,21 @@ TEST_CASE("math:rectangle") {
     REQUIRE(rect2.sdl_rect.w == 100);
     REQUIRE(rect2.sdl_rect.h == 200);
 }
+
+TEST_CASE("math:collisions") {
+    // Rectangle to test collisions against
+    Rectangle<int> rect1 = Rectangle<int>(Point<int>(0, 0), 100, 100);
+    // This is inside rect1
+    Point<int> pt1 = Point<int>(50, 50);
+    // This is not inside rect1
+    Point<int> pt2 = Point<int>(150, 150);
+    // This collides with rect1
+    Rectangle<int> rect2 = Rectangle<int>(Point<int>(50, 50), 100, 100);
+    // This does not collide with rect1
+    Rectangle<int> rect3 = Rectangle<int>(Point<int>(150, 150), 100, 100);
+
+    REQUIRE(rect1.isInside(pt1) == true);
+    REQUIRE(rect1.isInside(pt2) == false);
+    REQUIRE(rect1.isCollision(rect2) == true);
+    REQUIRE(rect1.isCollision(rect3) == false);
+}
