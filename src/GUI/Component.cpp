@@ -38,6 +38,10 @@ Rectangle<int> Component::getRect() {
     return _rect;
 }
 
+SDL_Rect* Component::getSDL_Rect() {
+    return &_rect.sdl_rect;
+}
+
 void Component::setOrigin(Point<int> origin) {
     _origin = origin;
 }

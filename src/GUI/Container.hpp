@@ -23,16 +23,9 @@ public:
 
     /// Render container and children
     void render();
-
-    SDL_Rect* getRect() {
-        return &_rect.sdl_rect;
-    }
 private:
     /// Margin between contained components
     int _margin;
-
-    /// Dimensions of container
-    Rectangle<int> _rect;
 
     /// Container children
     std::vector<Component*> _children;

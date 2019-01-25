@@ -28,6 +28,7 @@ public:
 
     /// Get rectangle for component shape
     Rectangle<int> getRect();
+    SDL_Rect* getSDL_Rect();
 
     /// Set the top-left origin
     void setOrigin(Point<int> origin);
@@ -56,15 +57,15 @@ protected:
 
     // Reference to graphics
     Graphics* _graphics;
-private:
-    // Initialize the component
-    void _init();
 
     // Origin of the component is top-left
     Point<int> _origin;
 
     // Rectangle containing component
-    Rectangle<int> _rect;    
+    Rectangle<int> _rect;
+private:
+    // Initialize the component
+    void _init();
 
     // For event handling we store a map of events => handler
     std::map<Event, std::function<void()>> _actions;

@@ -9,10 +9,9 @@ Container::Container(Point<int> origin, int width, int height, int margin) :
 
 Container::Container(Rectangle<int> rect, int margin) :
     Component(rect.topLeft(), rect.width(), rect.height()),
-    _margin(margin),
-    _rect(rect)
+    _margin(margin)
 {
-
+    _rect = rect;
 }
 
 void Container::addChild(Component* component) {
