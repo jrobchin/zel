@@ -38,56 +38,54 @@ bool sameColor(SDL_Color color1, SDL_Color color2) {
     return true;
 }
 
-TEST_CASE("graphics_functions") {
-    /* 
-     * Illustrates functionality of the Graphics class.
-     */
+TEST_CASE("create_color") {
+    /* Create colours multiple ways and make sure the result is expected. */
+    Graphics* graphics = Graphics::Instance();
 
-    SECTION("create_color") {
-        /* Create colours multiple ways and make sure the result is expected. */
+    // Green test color: rgb(78, 219, 90)
+    SDL_Color testColor = { (uint8_t) 78, (uint8_t) 219, (uint8_t) 90};
 
-        Graphics* graphics = Graphics::Instance();
+    SDL_Color rgbColor; // color to be created by inputting RGB values
+    SDL_Color hexColor; // color to be created by inputting a hex value
 
-        // Green test color: rgb(78, 219, 90)
-        SDL_Color testColor = { (uint8_t) 78, (uint8_t) 219, (uint8_t) 90};
+    rgbColor = graphics->createColor(78, 219, 90, 127);
+    hexColor = graphics->createColor("#4edb5a");
 
-        SDL_Color rgbColor; // color to be created by inputting RGB values
-        SDL_Color hexColor; // color to be created by inputting a hex value
+    // Check that we made the colors correctly
+    REQUIRE(sameColor(testColor, rgbColor) == true);
+    REQUIRE(sameColor(testColor, hexColor) == true);
+}
 
-        rgbColor = graphics->createColor(78, 219, 90, 127);
-        hexColor = graphics->createColor("#4edb5a");
+TEST_CASE("create_draw_color") {
+    /* Create a color and draw it to the window. */
+    Graphics* graphics = Graphics::Instance();
 
-        // Check that we made the colors correctly
-        REQUIRE(sameColor(testColor, rgbColor) == true);
-        REQUIRE(sameColor(testColor, hexColor) == true);
-    }
+    Log::log("create_draw_color");
+    SDL_Color color = graphics->createColor("#4edb5a");
 
-    SECTION("draw_color") {
-        /* Create a color and draw it to the window. */
-        
-        Graphics* graphics = Graphics::Instance();
+    graphics->setDrawColor(color);
 
-        SDL_Color color = graphics->createColor("#4edb5a");
+    graphics->clearRender();
+    graphics->presentRender();
 
-        graphics->setDrawColor(color);
+    SDL_Delay(500);
+    Log::log("create_draw_color: PASSED");
+}
 
-        graphics->clearRender();
-        graphics->presentRender();
+TEST_CASE("create_draw_texture") {
+    /* Create a texture from a png file and draw it to the window. */
+    Graphics* graphics = Graphics::Instance();
 
-        SDL_Delay(500);
-    }
+    Log::log("create_draw_texture");
+    SDL_Color color = graphics->createColor("#ffffff");
+    graphics->setDrawColor(color);
 
-    SECTION("create_draw_texture") {
-        /* Create a texture from a png file and draw it to the window. */
+    SDL_Texture* texture = graphics->createTexture("../assets/images/test.png");
 
-        Graphics* graphics = Graphics::Instance();
+    graphics->clearRender();
+    graphics->drawTexture(texture);
+    graphics->presentRender();
 
-        SDL_Texture* texture = graphics->createTexture("../assets/images/test.png");
-
-        graphics->clearRender();
-        graphics->drawTexture(texture);
-        graphics->presentRender();
-
-        SDL_Delay(500);
-    }
+    SDL_Delay(500);
+    Log::log("create_draw_texture: PASSED");
 }

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Log.hpp"
@@ -71,8 +72,6 @@ bool Graphics::_init(std::string windowName, int screenWidth, int screenHeight) 
 }
 
 void Graphics::_close() {
-    Log::verbose("Closing SDL2 and window.");
-
     //Destroy window    
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -88,6 +87,9 @@ void Graphics::getWindowSize(int* width, int* height) {
     SDL_GetWindowSize(this->window, width, height);
 }
 
+/* 
+    Draw functions
+ */
 void Graphics::clearRender() {
     SDL_RenderClear(renderer);
 }
@@ -104,6 +106,18 @@ void Graphics::drawTexture(SDL_Texture* texture, SDL_Rect* clipRect) {
     SDL_RenderCopy(renderer, texture, clipRect, NULL);
 }
 
+void Graphics::setViewport(SDL_Rect* viewport) {
+    SDL_RenderSetViewport(renderer, viewport);
+}
+
+void Graphics::resetViewport() {
+    // Passing NULL resets the viewport to fullscreen
+    SDL_RenderSetViewport(renderer, NULL);
+}
+
+/* 
+    Creators
+ */
 SDL_Color Graphics::createColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
     SDL_Color color = {r, g, b, a};
     return color;
@@ -129,7 +143,7 @@ SDL_Color Graphics::createColor(std::string hex) {
 }
 
 SDL_Texture* Graphics::createTexture(std::string fpath) {
-    SDL_Texture* newTexture = nullptr;
+    SDL_Texture* newTexture;
 
     // Create surface from image
     SDL_Surface* loadedSurface = IMG_Load(fpath.c_str());
@@ -146,5 +160,6 @@ SDL_Texture* Graphics::createTexture(std::string fpath) {
         }
         SDL_FreeSurface(loadedSurface);
     }
+
     return newTexture;
 }

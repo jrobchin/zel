@@ -22,9 +22,15 @@ public:
     void clearRender();
     void presentRender();
 
-    /// Draw functions
+    /* Draw functions */
+    /// Set draw color on render clear
     void setDrawColor(SDL_Color color);
+    /// Draw a texture to the renderer. Optionally pass a rectangle to clip the texture.
     void drawTexture(SDL_Texture* texture, SDL_Rect* clipRect=NULL);
+    /// Set the viewport for next rendering. Pass NULL to reset the viewport.
+    void setViewport(SDL_Rect* viewport);
+    /// Reset viewport to fullscreen
+    void resetViewport();
 
     /// Create an SDL_Color
     SDL_Color createColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
