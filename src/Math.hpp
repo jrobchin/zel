@@ -1,6 +1,9 @@
 #ifndef MATH_HPP
 #define MATH_HPP
 
+#include <SDL2/SDL.h>
+#include "Log.hpp"
+
 /*
  * 2D math utils. 
  */
@@ -18,90 +21,168 @@ struct Point {
     }
 };
 
-/* Rectangle */
+/* 
+ * Rectangle.
+ * 
+ * Rectangles are currently immutable.
+ * 
+ * TODO: Add recalculate method and make rectangles mutable.
+ */
 template <class T>
 class Rectangle {
 public:
-    T top, left, bottom, right;
-
     Rectangle();
     Rectangle(T top, T left, T bottom, T right);
     Rectangle(Point<T> topLeft, Point<T> bottomRight);
     Rectangle(Point<T> topLeft, T width, T height);
     Rectangle(T width, T height);
+    ~Rectangle();
+    
+    /// SDL_Rect that matches the dimensions of the rectangle
+    SDL_Rect sdl_rect;
+    /// Get top
+    T top();
+    /// Get left
+    T left();
+    /// Get bottom
+    T bottom();
+    /// Get right
+    T right();
+    /// Get top-left corner
     Point<T> topLeft();
+    /// Get top-right corner
     Point<T> topRight();
+    /// Get bottom-left corner
     Point<T> bottomLeft();
+    /// Get bottom-right corner
     Point<T> bottomRight();
+    /// Get midpoint
     Point<T> midPoint();
+    /// Get rect width
+    T width();
+    /// Get rect height
+    T height();
+    /// Get SDL rect pointer
+    SDL_Rect getSDL_Rect();
+
+private:
+    void _init();
+    T _top, _left, _bottom, _right;
 };
 
 template <class T>
 Rectangle<T>::Rectangle() :
-    top(0),
-    left(0),
-    bottom(0),
-    right(0)
+    _top(0),
+    _left(0),
+    _bottom(0),
+    _right(0)
 {
+    _init();
 }
 
 template <class T>
 Rectangle<T>::Rectangle(T top, T left, T bottom, T right) {
-    top = top;
-    left = left;
-    bottom = bottom;
-    right = right;
+    _top = top;
+    _left = left;
+    _bottom = bottom;
+    _right = right;
+    _init();
 }
 
 template <class T>
 Rectangle<T>::Rectangle(Point<T> topLeft, Point<T> bottomRight) {
-    top = topLeft.y;
-    left = topLeft.x;
-    bottom = bottomRight.y;
-    right = bottomRight.x;
+    _top = topLeft.y;
+    _left = topLeft.x;
+    _bottom = bottomRight.y;
+    _right = bottomRight.x;
+    _init();
 }
 
 template <class T>
 Rectangle<T>::Rectangle(Point<T> topLeft, T width, T height) {
-    top = topLeft.y;
-    left = topLeft.x;
-    bottom = topLeft.y + height;
-    right = topLeft.x + width;
+    _top = topLeft.y;
+    _left = topLeft.x;
+    _bottom = topLeft.y + height;
+    _right = topLeft.x + width;
+    _init();
 }
 
 template <class T>
 Rectangle<T>::Rectangle(T width, T height) {
-    top = 0;
-    left = 0;
-    bottom = height;
-    right = width;
+    _top = 0;
+    _left = 0;
+    _bottom = height;
+    _right = width;
+    _init();
+}
+
+template <class T>
+void Rectangle<T>::_init() {
+    sdl_rect.x = _left;
+    sdl_rect.y = _top;
+    sdl_rect.w = _right - _left;
+    sdl_rect.h = _bottom - _top;
+}
+
+template <class T>
+Rectangle<T>::~Rectangle() {
+}
+
+template <class T>
+T Rectangle<T>::top() {
+    return _top;
+}
+
+template <class T>
+T Rectangle<T>::left() {
+    return _left;
+}
+
+template <class T>
+T Rectangle<T>::bottom() {
+    return _bottom;
+}
+
+template <class T>
+T Rectangle<T>::right() {
+    return _right;
 }
 
 template <class T>
 Point<T> Rectangle<T>::topLeft() {
-    return Point<T>(left, top);
+    return Point<T>(_left, _top);
 }
 
 template <class T>
 Point<T> Rectangle<T>::topRight() {
-    return Point<T>(right, top);
+    return Point<T>(_right, _top);
 }
 
 template <class T>
 Point<T> Rectangle<T>::bottomLeft() {
-    return Point<T>(left, bottom);
+    return Point<T>(_left, _bottom);
 }
 
 template <class T>
 Point<T> Rectangle<T>::bottomRight() {
-    return Point<T>(right, bottom);
+    return Point<T>(_right, _bottom);
 }
 
 template <class T>
 Point<T> Rectangle<T>::midPoint() {
-    T midx = (left + right) / 2;
-    T midy = (top + bottom) / 2;
+    T midx = (_left + _right) / 2;
+    T midy = (_top + _bottom) / 2;
     return Point<T>(midx, midy);
+}
+
+template <class T>
+T Rectangle<T>::width() {
+    return _right - _left;
+}
+
+template <class T>
+T Rectangle<T>::height() {
+    return _bottom - _top;
 }
 
 #endif
