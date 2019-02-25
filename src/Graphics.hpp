@@ -25,6 +25,8 @@ public:
     /* Draw functions */
     /// Set draw color on render clear
     void setDrawColor(SDL_Color color);
+    /// Set window background color
+    void setBackgroundColor(SDL_Color color);
     /// Draw a texture to the renderer. Optionally pass a rectangle to clip the texture.
     void drawTexture(SDL_Texture* texture, SDL_Rect* clipRect=NULL);
     /// Set the viewport for next rendering. Pass NULL to reset the viewport.
@@ -53,9 +55,9 @@ private:
     void _close();
 
     /// Default bg color drawn on render clear
-    const struct {
+    struct {
         uint8_t r = 0, g = 0, b = 0, a = 255;
-    } bgColor;
+    } _bgColor;
 };
 
 #endif

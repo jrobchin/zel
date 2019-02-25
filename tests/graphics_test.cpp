@@ -63,7 +63,7 @@ TEST_CASE("create_draw_color") {
     Log::log("create_draw_color");
     SDL_Color color = graphics->createColor("#4edb5a");
 
-    graphics->setDrawColor(color);
+    graphics->setBackgroundColor(color);
 
     graphics->clearRender();
     graphics->presentRender();

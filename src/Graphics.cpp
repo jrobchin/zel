@@ -53,7 +53,7 @@ bool Graphics::_init(std::string windowName, int screenWidth, int screenHeight) 
 
             } else {
                 // Initialize renderer color
-                SDL_SetRenderDrawColor(renderer, bgColor.r, bgColor.g, bgColor.b, bgColor.a);
+                SDL_SetRenderDrawColor(renderer, _bgColor.r, _bgColor.g, _bgColor.b, _bgColor.a);
 
                 // Initialize SDL images
                 int imgFlags = IMG_INIT_PNG;
@@ -91,6 +91,7 @@ void Graphics::getWindowSize(int* width, int* height) {
     Draw functions
  */
 void Graphics::clearRender() {
+    SDL_SetRenderDrawColor(renderer, _bgColor.r, _bgColor.g, _bgColor.b, _bgColor.a);
     SDL_RenderClear(renderer);
 }
 
@@ -100,6 +101,13 @@ void Graphics::presentRender() {
 
 void Graphics::setDrawColor(SDL_Color color) {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+}
+
+void Graphics::setBackgroundColor(SDL_Color color) {
+    _bgColor.r = color.r;
+    _bgColor.g = color.g;
+    _bgColor.b = color.b;
+    _bgColor.a = color.a;
 }
 
 void Graphics::drawTexture(SDL_Texture* texture, SDL_Rect* clipRect) {
